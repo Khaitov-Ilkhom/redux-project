@@ -1,13 +1,16 @@
 import './App.css'
-import Home from "./routes/home/Home.jsx";
+import RouteController from "./routes/Index.jsx";
 
 function App() {
 
   return (
     <>
-      <Home/>
+      <RouteController/>
     </>
   )
 }
 
 export default App
+
+
+// 333211434557-fljgo3pcbo5pacju2ir2rejsqtevmvo6.apps.googleusercontent.com
