@@ -2,7 +2,7 @@ import "./Sidebar.css"
 import {Button, Layout, Menu, Modal, notification, Skeleton, Typography} from "antd";
 import {UserOutlined, ProductOutlined} from '@ant-design/icons';
 import {NavLink, useNavigate} from "react-router-dom";
-import {Avatar, Badge, Space} from 'antd';
+import {Avatar, Badge} from 'antd';
 import {SIGN_OUT} from "../../redux/action/Types.jsx";
 import {useState} from "react";
 import {BsFillDoorOpenFill} from "react-icons/bs";
@@ -19,19 +19,16 @@ const Sidebar = ({collapsed, userProfileData, loading}) => {
 
   const handleOk = () => {
     setModalText("Signed out successfully");
-
     setConfirmLoading(true);
-    setTimeout(() => {
-      setOpen(false);
-      setConfirmLoading(false);
-      dispatch({ type: SIGN_OUT });
-      navigate("/auth");
+    setOpen(false);
+    setConfirmLoading(false);
+    dispatch({type: SIGN_OUT});
+    navigate("/auth");
 
-      notification.success({
-        message: 'Signed out successfully',
-        description: 'You have been signed out successfully.',
-      });
-    }, 1500);
+    notification.success({
+      message: 'Signed out successfully',
+      description: 'You have been signed out successfully.',
+    });
   };
 
   const handleCancel = () => {
@@ -44,10 +41,6 @@ const Sidebar = ({collapsed, userProfileData, loading}) => {
 
   const handleSingOut = () => {
     setOpen(true);
-    notification.success({
-      message: 'Signed out successfully',
-      description: error.response?.data?.message || 'Will be signed out',
-    });
   };
 
   return (
@@ -65,19 +58,20 @@ const Sidebar = ({collapsed, userProfileData, loading}) => {
               <Skeleton.Input active size="small" className="bg-slate-500 rounded max-w-[50px] h-[20px]"/>
             </div> :
             <Text className="text-white flex-col flex justify-center gap-1">
-              <span className="text-[16px] leading-[12px]">{loading ? "Loading..." : userProfileData?.first_name.split(" ")[0]}</span>
+              <span
+                className="text-[16px] leading-[12px]">{loading ? "Loading..." : userProfileData?.first_name.split(" ")[0]}</span>
               <span className="text-3">{userProfileData?.role}</span>
             </Text>
         }
       </div>
-      <div className="flex flex-col justify-between">
+      <div className="flex flex-col justify-between flex-1">
         <Menu
           theme="dark"
           mode="inline"
           items={[
             {
               key: '1',
-              icon: <ProductOutlined />,
+              icon: <ProductOutlined/>,
               label: <NavLink end to="/dashboard">Products</NavLink>,
             },
             {
@@ -97,7 +91,7 @@ const Sidebar = ({collapsed, userProfileData, loading}) => {
           {!collapsed && (
             <span className="text-[12px]">Sign Out </span>
           )}
-          <span><BsFillDoorOpenFill /></span>
+          <span><BsFillDoorOpenFill/></span>
         </Button>
       </div>
       <Modal

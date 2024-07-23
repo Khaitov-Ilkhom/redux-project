@@ -1,6 +1,7 @@
-import { Flex, Spin } from 'antd';
+import {Flex, Spin, Typography} from 'antd';
 import {Suspense} from "react";
 
+const {Title} = Typography
 const Loading = () => {
   return (
     <div className="w-full h-screen flex justify-center items-center">
@@ -20,5 +21,9 @@ const SuspenseElement = ({children}) => {
   )
 }
 
+const ContentTitle = ({children}) => {
+  return <Title level={3}>{children}</Title>
+}
 
-export {Loading, SuspenseElement}
+
+export {Loading, SuspenseElement, ContentTitle}
