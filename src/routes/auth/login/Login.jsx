@@ -1,14 +1,16 @@
 import {Button, Checkbox, Form, Input, Typography, Divider, notification} from 'antd';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {GoogleLogin} from '@react-oauth/google';
 import TelegramLoginButton from 'telegram-login-button'
 import axios from "../../../api/Index.jsx";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {ERROR, LOADING, LOGIN_USER} from "../../../redux/action/Types.jsx";
 
 const {Title, Text} = Typography
 
 const Login = () => {
+  const navigate = useNavigate()
+  const authData = useSelector(state => state)
   const dispatch = useDispatch()
   const onFinish = async (values) => {
     try {
@@ -22,6 +24,7 @@ const Login = () => {
           showProgress: true,
         });
         dispatch({type: LOGIN_USER, token: data.token, user: data.user})
+        navigate("/dashboard")
       } else {
         throw new Error("Something went wrong")
       }
@@ -99,15 +102,41 @@ const Login = () => {
           span: 24,
         }}
       >
-        <Button className="w-full" type="primary" htmlType="submit">
+        <Button loading={authData.loading} disabled={authData.loading} className="w-full" type="primary" htmlType="submit">
           Log In
         </Button>
       </Form.Item>
       <Divider><Text>Or</Text></Divider>
       <div className="flex justify-center items-center w-full flex-col my-4 gap-2">
         <GoogleLogin
-          onSuccess={credentialResponse => {
-            console.log(credentialResponse);
+          onSuccess={async credentialResponse => {
+            const decodedData = JSON.parse(atob(credentialResponse.credential.split(".")[1]))
+            const user = {
+              username: decodedData.email,
+              password: decodedData.sub
+            }
+            try {
+              dispatch({type: LOADING})
+              const res = await axios.post("/auth/login", user)
+              const data = res.data.payload
+              if (res.status === 200 && data.token) {
+                notification.success({
+                  message: 'Log In Successful',
+                  description: 'You have successfully logged-in.',
+                  showProgress: true,
+                });
+                dispatch({type: LOGIN_USER, token: data.token, user: data.user})
+              } else {
+                throw new Error("Something went wrong")
+              }
+            } catch (error) {
+              dispatch({type: ERROR, message: error.response?.data?.message || error})
+              notification.error({
+                message: 'Log In Failed',
+                description: error.response?.data?.message || error,
+                showProgress: true,
+              });
+            }
           }}
           onError={() => {
             console.log('Login Failed');

@@ -1,7 +1,6 @@
 import {Outlet} from "react-router-dom";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
-
 const Auth = () => {
   return (
     <div className="w-full h-screen flex justify-center items-center bg-[]#f7f7f7">

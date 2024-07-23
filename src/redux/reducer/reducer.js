@@ -1,7 +1,8 @@
-import {ERROR, LOADING, LOGIN_USER, REGISTER_USER} from "../action/Types.jsx";
+import {ERROR, LOADING, LOGIN_USER, REGISTER_USER, SIGN_OUT} from "../action/Types.jsx";
+import {saveToLocalStorage} from "../../helpers/Index.jsx";
 
 const initialState = {
-  token: null,
+  token: localStorage.getItem("Token") || null,
   user: null,
   loading: false,
   error: null,
@@ -13,6 +14,7 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_USER:
     case REGISTER_USER:
+      saveToLocalStorage("Token", action.token)
       return {
         ...state,
         token: action.token,
@@ -33,6 +35,11 @@ const reducer = (state = initialState, action) => {
         loading: false,
         isError: true,
         error: action.message
+      }
+    case SIGN_OUT:
+      localStorage.removeItem("Token")
+      return {
+
       }
     default:
       return state
