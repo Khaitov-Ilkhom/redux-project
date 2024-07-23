@@ -39,7 +39,9 @@ const reducer = (state = initialState, action) => {
     case SIGN_OUT:
       localStorage.removeItem("Token")
       return {
-
+        ...state,
+        token: null,
+        user: null
       }
     default:
       return state

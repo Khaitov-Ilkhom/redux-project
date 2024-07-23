@@ -20,6 +20,7 @@ api.interceptors.request.use(
     return Promise.reject(error)
   }
 )
+
 api.interceptors.response.use(
   (response) => {
     if (response) {

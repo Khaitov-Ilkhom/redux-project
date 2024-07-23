@@ -1,13 +1,55 @@
 import "./Sidebar.css"
-import {Layout, Menu, Skeleton, Typography} from "antd";
+import {Button, Layout, Menu, Modal, notification, Skeleton, Typography} from "antd";
 import {UserOutlined, ProductOutlined} from '@ant-design/icons';
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import {Avatar, Badge, Space} from 'antd';
+import {SIGN_OUT} from "../../redux/action/Types.jsx";
+import {useState} from "react";
+import {BsFillDoorOpenFill} from "react-icons/bs";
+import {useDispatch} from "react-redux";
 
 const {Text} = Typography
 const {Sider} = Layout;
 
 const Sidebar = ({collapsed, userProfileData, loading}) => {
+  const [open, setOpen] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [modalText, setModalText] = useState("You will be signed out");
+
+
+  const handleOk = () => {
+    setModalText("Signed out successfully");
+
+    setConfirmLoading(true);
+    setTimeout(() => {
+      setOpen(false);
+      setConfirmLoading(false);
+      dispatch({ type: SIGN_OUT });
+      navigate("/auth");
+
+      notification.success({
+        message: 'Signed out successfully',
+        description: 'You have been signed out successfully.',
+      });
+    }, 1500);
+  };
+
+  const handleCancel = () => {
+    console.log("Clicked cancel button");
+    setOpen(false);
+  };
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleSingOut = () => {
+    setOpen(true);
+    notification.success({
+      message: 'Signed out successfully',
+      description: error.response?.data?.message || 'Will be signed out',
+    });
+  };
+
   return (
     <Sider trigger={null} collapsible collapsed={collapsed} className="py-7 px-2">
       <div className="flex items-center gap-5 p-3 overflow-hidden whitespace-nowrap">
@@ -28,22 +70,46 @@ const Sidebar = ({collapsed, userProfileData, loading}) => {
             </Text>
         }
       </div>
-      <Menu
-        theme="dark"
-        mode="inline"
-        items={[
-          {
-            key: '1',
-            icon: <ProductOutlined />,
-            label: <NavLink end to="/dashboard">Products</NavLink>,
-          },
-          {
-            key: '2',
-            icon: <UserOutlined/>,
-            label: <NavLink to="/dashboard/users">Users</NavLink>,
-          }
-        ]}
-      />
+      <div className="flex flex-col justify-between">
+        <Menu
+          theme="dark"
+          mode="inline"
+          items={[
+            {
+              key: '1',
+              icon: <ProductOutlined />,
+              label: <NavLink end to="/dashboard">Products</NavLink>,
+            },
+            {
+              key: '2',
+              icon: <UserOutlined/>,
+              label: <NavLink to="/dashboard/users">Users</NavLink>,
+            }
+          ]}
+        />
+        <Button
+          className="mt-auto mx-2 whitespace-normal"
+          danger
+          type="primary"
+          onClick={handleSingOut}
+        >
+
+          {!collapsed && (
+            <span className="text-[12px]">Sign Out </span>
+          )}
+          <span><BsFillDoorOpenFill /></span>
+        </Button>
+      </div>
+      <Modal
+        maskClosable={false}
+        title="Sign Out"
+        open={open}
+        onOk={handleOk}
+        confirmLoading={confirmLoading}
+        onCancel={handleCancel}
+      >
+        <p>{modalText}</p>
+      </Modal>
     </Sider>
   )
 }
