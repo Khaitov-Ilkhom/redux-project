@@ -1,4 +1,4 @@
-import {Button, Checkbox, Form, Input, Typography, Divider} from 'antd';
+import {Button, Checkbox, Form, Input, Typography, Divider, notification} from 'antd';
 import {Link} from "react-router-dom";
 import {GoogleLogin} from '@react-oauth/google';
 import TelegramLoginButton from 'telegram-login-button'
@@ -14,16 +14,24 @@ const Login = () => {
     try {
       dispatch({type: LOADING})
       const res = await axios.post("/auth/login", values)
-      console.log(res)
       const data = res.data.payload
       if (res.status === 200 && data.token) {
+        notification.success({
+          message: 'Log In Successful',
+          description: 'You have successfully logged-in.',
+          showProgress: true,
+        });
         dispatch({type: LOGIN_USER, token: data.token, user: data.user})
       } else {
         throw new Error("Something went wrong")
       }
     } catch (error) {
-      console.log(error)
-      dispatch({type: ERROR, message: error.res?.data?.message || error})
+      dispatch({type: ERROR, message: error.response?.data?.message || error})
+      notification.error({
+        message: 'Log In Failed',
+        description: error.response?.data?.message || error,
+        showProgress: true,
+      });
     }
   };
   const onFinishFailed = (errorInfo) => {
@@ -96,7 +104,7 @@ const Login = () => {
         </Button>
       </Form.Item>
       <Divider><Text>Or</Text></Divider>
-      <div className="flex justify-center items-center my-4">
+      <div className="flex justify-center items-center w-full flex-col my-4 gap-2">
         <GoogleLogin
           onSuccess={credentialResponse => {
             console.log(credentialResponse);
