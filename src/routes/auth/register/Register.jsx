@@ -110,7 +110,7 @@ const Register = () => {
         </Button>
       </Form.Item>
       <Divider><Text>Or</Text></Divider>
-      <div className="flex justify-center items-center my-4">
+      <div className="flex justify-center items-center my-4 w-full mx-5 gap-2">
         <GoogleLogin
           onSuccess={credentialResponse => {
             console.log(credentialResponse);
@@ -124,7 +124,6 @@ const Register = () => {
           dataOnauth={(user) => console.log(user)}
         />
       </div>
-      {/* eslint-disable-next-line react/no-unescaped-entities */}
       <Text className="text-center block"> Already have an account? <Link to="/auth">Log In</Link></Text>
     </Form>
   )
