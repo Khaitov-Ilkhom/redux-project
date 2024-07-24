@@ -12,7 +12,6 @@ const ProductForm = () => {
   const [categoryData] = useFetch("/product/category")
   const [productTypeData] = useFetch("/product/product-type")
   const [productImages, setProductsImages] = useState(null)
-  const [form] = Form.useForm();
   // Form
   const onFinish = (values) => {
     const form = new FormData();
@@ -35,22 +34,12 @@ const ProductForm = () => {
       },
       body: form
     })
-      .then(res => {
-        if (res.ok) {
-          setIsModalOpen(true);
-          notification.success({
-            message: 'Product Created',
-            description: 'Product has been created.',
-          })
-          setTimeout(() => {
-            location.reload()
-          }, 1000);
-        }
-        return res.json();
-      })
+      .then(res => res.json())
       .then(data => console.log(data))
       .catch(err => console.log(err))
-  };
+
+
+  }
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
@@ -90,14 +79,14 @@ const ProductForm = () => {
 
       <div className="grid grid-cols-2 gap-2 product-form">
         <Form.Item
-        label="Category"
-        name="category"
-        rules={[
-          {
-            required: true,
-            message: 'Please select category!',
-          },
-        ]}
+          label="Category"
+          name="category"
+          rules={[
+            {
+              required: true,
+              message: 'Please select category!',
+            },
+          ]}
         >
           <Select
             className="w-full"
@@ -118,7 +107,7 @@ const ProductForm = () => {
         >
           <Select
             mode="tags"
-            max Count={1}
+            maxCount={1}
             className="w-full"
             options={productTypeData.payload?.map(type => ({key: type, label: type, value: type}))}
           />
@@ -178,7 +167,6 @@ const ProductForm = () => {
       </Form.Item>
 
       <Form.Item
-
         label="Product Images"
         name="product_images"
         rules={[

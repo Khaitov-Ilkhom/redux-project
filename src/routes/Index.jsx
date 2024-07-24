@@ -21,8 +21,7 @@ const RouteController = () => {
     },
     {
       path: "auth",
-      // element: authData.token ? <Navigate to="/dashboard"/>: <Suspense><Auth/></Suspense>,
-      element: <Suspense><Auth/></Suspense>,
+      element: authData.token ? <Navigate to="/dashboard"/>: <Suspense><Auth/></Suspense>,
       children: [
         {
           path: "",

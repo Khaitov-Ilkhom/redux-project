@@ -15,7 +15,6 @@ const Products = () => {
     setOpen(false);
   };
   const handleCancel = () => {
-    console.log('Clicked cancel button');
     setOpen(false);
   }
 

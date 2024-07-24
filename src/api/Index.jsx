@@ -13,7 +13,7 @@ const api = axios.create({
 
 api.interceptors.request.use(
   (request) => {
-    request.headers["Authorization"] = "Bearer" + store.getState().token
+    request.headers["Authorization"] = "Bearer " + store.getState().token
     return request
   },
   (error) => {

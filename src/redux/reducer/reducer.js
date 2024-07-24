@@ -36,13 +36,13 @@ const reducer = (state = initialState, action) => {
         isError: true,
         error: action.message
       }
-    // case SIGN_OUT:
-    //   localStorage.removeItem("Token")
-    //   return {
-    //     ...state,
-    //     token: null,
-    //     user: null
-    //   }
+    case SIGN_OUT:
+      localStorage.removeItem("Token")
+      return {
+        ...state,
+        token: null,
+        user: null
+      }
     default:
       return state
   }
