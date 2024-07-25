@@ -1,18 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {Table} from 'antd';
 import axios from "../../api/Index.jsx";
-import {useFetch} from "../../hooks/useFetch.jsx";
 
 const DashboardContent = ({columns, url, tableParams, setTableParams}) => {
   const getProductParams = (params) => ({
-    limit: params.pagination?.pageSize,
+    pageSize: params.pagination?.pageSize,
     page: params.pagination?.current,
     ...params,
   });
-
-  // const [data, loading] = useFetch("/product/all")
-  //
-  // console.log(data)
 
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
@@ -24,7 +19,6 @@ const DashboardContent = ({columns, url, tableParams, setTableParams}) => {
       .then(response => {
         setLoading(false)
         setData(response.data?.payload)
-        console.log(response)
         setTableParams({
           ...tableParams,
           pagination: {

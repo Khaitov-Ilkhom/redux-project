@@ -69,6 +69,17 @@ const Products = () => {
       dataIndex: 'product_images',
       render: (images) => <img className="w-[50px] h-[30px] object-contain" src={images[0]} alt="image"/>,
     },
+    {
+      key: "Action",
+      title: 'Action',
+      render: (_, record) => (
+        <div className="flex items-center gap-2 ">
+          <Button type="primary" onClick={() => handleUpdateProduct(record)}>Edit</Button>
+          <Button danger type="primary" onClick={() => setDeleteProduct(record)}>Delete</Button>
+        </div>
+      ),
+      with: '5%',
+    }
   ];
 
   return (
@@ -87,7 +98,7 @@ const Products = () => {
           <ProductForm/>
         </Modal>
       </div>
-      <DashboardContent columns={columns}  url="/product/all" tableParams={tableParams} setTableParams={setTableParams} ></DashboardContent>
+      <DashboardContent columns={columns}  url="/product/all" tableParams={tableParams} setTableParams={setTableParams} />
     </div>
   )
 }
