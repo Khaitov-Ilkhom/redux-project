@@ -4,6 +4,7 @@ import {useState} from "react";
 import Sidebar from "../../components/sidebar/Sidebar.jsx";
 import Headerr from "../../components/navbar/Header.jsx";
 import {useFetch} from "../../hooks/useFetch.jsx";
+import DashboardContent from "../../components/dahboardContent/DashboardContent.jsx";
 
 const {Content} = Layout;
 
