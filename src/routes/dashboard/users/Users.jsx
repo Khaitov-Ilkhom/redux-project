@@ -48,8 +48,10 @@ const Users = () => {
       key: "Action",
       title: 'Action',
       render: (user) => (
-        <Button type="primary" onClick={() => handleChangeUserPromotion(user)}>Promote</Button>
+        <Button type="primary">Promote</Button>
+      // onClick={() => handleChangeUserPromotion(user)}
       ),
+      width: "10%"
     }
   ];
 

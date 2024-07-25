@@ -74,11 +74,13 @@ const Products = () => {
       title: 'Action',
       render: (_, record) => (
         <div className="flex items-center gap-2 ">
-          <Button type="primary" onClick={() => handleUpdateProduct(record)}>Edit</Button>
-          <Button danger type="primary" onClick={() => setDeleteProduct(record)}>Delete</Button>
+          <Button type="primary">Edit</Button>
+          {/*onClick={() => handleUpdateProduct(record)}*/}
+          <Button danger type="primary">Delete</Button>
+          {/*onClick={() => setDeleteProduct(record)}*/}
         </div>
       ),
-      with: '5%',
+      with: '10%',
     }
   ];
 
