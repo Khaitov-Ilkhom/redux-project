@@ -1,5 +1,5 @@
 import "./ProductForm.css"
-import {Button, Form, Input, InputNumber, Select} from "antd";
+import {Button, Form, Input, InputNumber, notification, Select} from "antd";
 import {AiOutlineCloudUpload} from "react-icons/ai";
 import {useFetch} from "../../hooks/useFetch.jsx";
 import {useState} from "react";
@@ -7,7 +7,7 @@ import {useSelector} from "react-redux";
 
 const {TextArea} = Input
 
-const ProductForm = () => {
+const ProductForm = ({updateProduct, setUpdateProduct, setOpen}) => {
   const authData = useSelector(state => state)
   const [categoryData] = useFetch("/product/category")
   const [productTypeData] = useFetch("/product/product-type")
@@ -26,16 +26,23 @@ const ProductForm = () => {
     for (let i = 0; i < productImages.length; i++) {
       form.append("product_images", productImages[i])
     }
-
-    fetch("http://localhost:8000/product/create", {
-      method: "POST",
+    console.log(updateProduct)
+    fetch( updateProduct ? `http://localhost:8000/product/update/${updateProduct._id}` :"http://localhost:8000/product/create", {
+      method: updateProduct ? "PUT" : "POST",
       headers: {
         "Authorization": "Bearer " + authData.token
       },
       body: form
     })
       .then(res => res.json())
-      .then(data => console.log(data))
+      .then(data => {
+        console.log(data)
+        setUpdateProduct(null)
+        setOpen(false)
+        notification.success({
+          message: "Success"
+        })
+      })
       .catch(err => console.log(err))
 
 

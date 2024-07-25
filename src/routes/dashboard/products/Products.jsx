@@ -6,7 +6,18 @@ import DashboardContent from "../../../components/dahboardContent/DashboardConte
 
 
 const Products = () => {
+  const [tableParams, setTableParams] = useState({
+    pagination: {
+      current: 1,
+      pageSize: 5,
+    },
+  });
+  const [updateProduct, setUpdateProduct] = useState(null)
 
+  const handleUpdateProduct = (product) => {
+    setUpdateProduct(product)
+    setOpen(true)
+  }
   // Modal
   const [open, setOpen] = useState(false);
   const showModal = () => {
@@ -17,14 +28,8 @@ const Products = () => {
   };
   const handleCancel = () => {
     setOpen(false);
-  }
 
-  const [tableParams, setTableParams] = useState({
-    pagination: {
-      current: 1,
-      pageSize: 5,
-    },
-  });
+  }
 
   const columns = [
     {
@@ -72,10 +77,10 @@ const Products = () => {
     {
       key: "Action",
       title: 'Action',
-      render: (_, record) => (
+      render: (product) => (
         <div className="flex items-center gap-2 ">
-          <Button type="primary">Edit</Button>
-          {/*onClick={() => handleUpdateProduct(record)}*/}
+          <Button type="primary" onClick={() => handleUpdateProduct(product)}>Edit</Button>
+
           <Button danger type="primary">Delete</Button>
           {/*onClick={() => setDeleteProduct(record)}*/}
         </div>
@@ -96,8 +101,9 @@ const Products = () => {
           onCancel={handleCancel}
           footer={null}
           maskClosable={false}
+          centered
         >
-          <ProductForm/>
+          <ProductForm updateProduct={updateProduct} setUpdateProduct={setUpdateProduct} setOpen={setOpen}/>
         </Modal>
       </div>
       <DashboardContent columns={columns}  url="/product/all" tableParams={tableParams} setTableParams={setTableParams} />
