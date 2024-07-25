@@ -2,12 +2,13 @@ import "./ProductForm.css"
 import {Button, Form, Input, InputNumber, notification, Select} from "antd";
 import {AiOutlineCloudUpload} from "react-icons/ai";
 import {useFetch} from "../../hooks/useFetch.jsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 
 const {TextArea} = Input
 
 const ProductForm = ({updateProduct, setUpdateProduct, setOpen}) => {
+  const [form] = Form.useForm()
   const authData = useSelector(state => state)
   const [categoryData] = useFetch("/product/category")
   const [productTypeData] = useFetch("/product/product-type")
@@ -26,7 +27,6 @@ const ProductForm = ({updateProduct, setUpdateProduct, setOpen}) => {
     for (let i = 0; i < productImages.length; i++) {
       form.append("product_images", productImages[i])
     }
-    console.log(updateProduct)
     fetch( updateProduct ? `http://localhost:8000/product/update/${updateProduct._id}` :"http://localhost:8000/product/create", {
       method: updateProduct ? "PUT" : "POST",
       headers: {
@@ -44,15 +44,23 @@ const ProductForm = ({updateProduct, setUpdateProduct, setOpen}) => {
         })
       })
       .catch(err => console.log(err))
-
-
   }
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
 
+  useEffect(() => {
+    form.setFieldsValue({
+      ...updateProduct
+    })
+    if (updateProduct === null) {
+      form.resetFields()
+    }
+  }, [updateProduct])
+
   return (
     <Form
+      form={form}
       name="basic"
       labelCol={{
         span: 8,
@@ -63,9 +71,7 @@ const ProductForm = ({updateProduct, setUpdateProduct, setOpen}) => {
       style={{
         maxWidth: 600,
       }}
-      initialValues={{
-        remember: true,
-      }}
+      initialValues={updateProduct}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete="off"

@@ -1,6 +1,6 @@
 import {ContentTitle} from "../../../utils/Index.jsx";
 import {Button} from "antd";
-import DashboardContent from "../../../components/dahboardContent/DashboardContent.jsx";
+import DashboardContent from "../../../components/dashboardContent/DashboardContent.jsx";
 import {useState} from "react";
 
 const Users = () => {

@@ -2,7 +2,7 @@ import {Layout} from "antd";
 import {Outlet} from "react-router-dom";
 import {useState} from "react";
 import Sidebar from "../../components/sidebar/Sidebar.jsx";
-import Headerr from "../../components/navbar/Header.jsx";
+import Headerr from "../../components/header/Header.jsx";
 import {useFetch} from "../../hooks/useFetch.jsx";
 
 const {Content} = Layout;

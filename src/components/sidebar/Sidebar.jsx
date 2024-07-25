@@ -1,11 +1,11 @@
 import "./Sidebar.css"
 import {Button, Layout, Menu, Modal, notification, Skeleton, Typography} from "antd";
-import {UserOutlined, ProductOutlined} from '@ant-design/icons';
+import {UserOutlined, ProductOutlined, HomeOutlined} from '@ant-design/icons';
 import {NavLink, useNavigate} from "react-router-dom";
 import {Avatar, Badge} from 'antd';
 import {SIGN_OUT} from "../../redux/action/Types.jsx";
 import {useState} from "react";
-import {BsFillDoorOpenFill} from "react-icons/bs";
+import {BsBox2Heart, BsFillDoorOpenFill} from "react-icons/bs";
 import {useDispatch} from "react-redux";
 
 const {Text} = Typography
@@ -15,7 +15,7 @@ const Sidebar = ({collapsed, userProfileData, loading}) => {
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalText, setModalText] = useState("You will be signed out");
-
+  const role = userProfileData?.role
 
   const handleOk = () => {
     setModalText("Signed out successfully");
@@ -68,16 +68,32 @@ const Sidebar = ({collapsed, userProfileData, loading}) => {
         <Menu
           theme="dark"
           mode="inline"
-          items={[
+          items={role === "admin" ? [
             {
               key: '1',
+              icon: <HomeOutlined/>,
+              label: <NavLink to="/">Home</NavLink>
+            },
+            {
+              key: '2',
               icon: <ProductOutlined/>,
               label: <NavLink end to="/dashboard">Products</NavLink>,
             },
             {
-              key: '2',
+              key: '3',
               icon: <UserOutlined/>,
               label: <NavLink to="/dashboard/users">Users</NavLink>,
+            },
+            {
+              key: '4',
+              icon: <BsBox2Heart/>,
+              label: <NavLink to="/dashboard/liked-products">Liked products</NavLink>
+            }
+          ] : [
+            {
+              key: '4',
+              icon: <BsBox2Heart/>,
+              label: <NavLink to="/dashboard/liked-products">Liked products</NavLink>
             }
           ]}
         />
