@@ -91,6 +91,11 @@ const Sidebar = ({collapsed, userProfileData, loading}) => {
             }
           ] : [
             {
+              key: '1',
+              icon: <HomeOutlined/>,
+              label: <NavLink to="/">Home</NavLink>
+            },
+            {
               key: '4',
               icon: <BsBox2Heart/>,
               label: <NavLink to="/dashboard/liked-products">Liked products</NavLink>
