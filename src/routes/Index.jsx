@@ -49,7 +49,7 @@ const RouteController = () => {
       children: [
         {
           path: "",
-          element: <Suspense>{role === "user" && <Navigate to="liked-products"/>}<Dashboards/></Suspense>,
+          element: <Suspense><Dashboards/></Suspense>,
           children: [
             {
               index: true,
@@ -61,17 +61,20 @@ const RouteController = () => {
               element: role && role === "admin" && <Suspense><Users/></Suspense>
             },
             {
-              index: true,
               path: "liked-products",
               element: <Suspense><LikedProducts/></Suspense>
             },
             {
+              index: true,
               path: "profile",
               element: <Suspense><Profile/></Suspense>
             }
           ]
         }
       ]
+    },
+    {
+      path: "single-page/:id"
     },
     {
       path: "notfound",

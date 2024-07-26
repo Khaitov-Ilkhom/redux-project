@@ -15,7 +15,7 @@ const Navbar = () => {
         <li className="flex items-center gap-4"><FaRegHeart/> <Link className="relative" to={''}><SlBasket/> <span
           className="w-5 h-5 flex font-semibold items-center justify-center text-white text-xs -top-3 -right-3  bg-rose-500 absolute rounded-full"></span>
         </Link></li>
-        <li><NavLink to="dashboard">Dashboard</NavLink></li>
+        <li className="active:scale-90 transition duration-500"><NavLink className="text-white bg-emerald-600 rounded-2xl px-5 py-2" to="auth">Login</NavLink></li>
       </ul>
     </nav>
   )

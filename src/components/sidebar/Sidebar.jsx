@@ -1,12 +1,14 @@
 import "./Sidebar.css"
 import {Button, Layout, Menu, Modal, notification, Skeleton, Typography} from "antd";
-import {UserOutlined, ProductOutlined, HomeOutlined} from '@ant-design/icons';
+import {ProductOutlined, HomeOutlined} from '@ant-design/icons';
 import {NavLink, useNavigate} from "react-router-dom";
 import {Avatar, Badge} from 'antd';
 import {SIGN_OUT} from "../../redux/action/Types.jsx";
 import {useState} from "react";
 import {BsBox2Heart, BsFillDoorOpenFill} from "react-icons/bs";
 import {useDispatch} from "react-redux";
+import {FaUser} from "react-icons/fa6";
+import {FaUsers} from "react-icons/fa";
 
 const {Text} = Typography
 const {Sider} = Layout;
@@ -49,7 +51,7 @@ const Sidebar = ({collapsed, userProfileData, loading}) => {
         <Badge count={1}>
           {
             loading ? <Skeleton.Avatar active size="large" className="rounded-full bg-slate-500"/>
-              : <Avatar className="bg-amber-500">{userProfileData?.first_name.at(0)}</Avatar>
+              : <>{userProfileData && userProfileData.photo_url ? <img src={userProfileData.photo_url} alt={userProfileData.username}/> : <Avatar className="bg-amber-500">{userProfileData?.first_name.at(0)}</Avatar>}</>
           }
         </Badge>
         {
@@ -76,19 +78,24 @@ const Sidebar = ({collapsed, userProfileData, loading}) => {
             },
             {
               key: '2',
+              icon: <FaUser/>,
+              label: <NavLink to="/dashboard/profile">Profile</NavLink>
+            },
+            {
+              key: '3',
               icon: <ProductOutlined/>,
               label: <NavLink end to="/dashboard">Products</NavLink>,
             },
             {
-              key: '3',
-              icon: <UserOutlined/>,
+              key: '4',
+              icon: <FaUsers/>,
               label: <NavLink to="/dashboard/users">Users</NavLink>,
             },
             {
-              key: '4',
+              key: '5',
               icon: <BsBox2Heart/>,
               label: <NavLink to="/dashboard/liked-products">Liked products</NavLink>
-            }
+            },
           ] : [
             {
               key: '1',
@@ -96,9 +103,14 @@ const Sidebar = ({collapsed, userProfileData, loading}) => {
               label: <NavLink to="/">Home</NavLink>
             },
             {
-              key: '4',
+              key: '2',
+              icon: <FaUser/>,
+              label: <NavLink to="/dashboard/profile">Profile</NavLink>
+            },
+            {
+              key: '5',
               icon: <BsBox2Heart/>,
-              label: <NavLink to="/dashboard/liked-products">Liked products</NavLink>
+              label: <NavLink end to="/dashboard/liked-products">Liked products</NavLink>
             }
           ]}
         />

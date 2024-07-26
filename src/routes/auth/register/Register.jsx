@@ -129,7 +129,8 @@ const Register = () => {
             const user = {
               username: decodedData.email,
               first_name: decodedData.name,
-              password: decodedData.sub
+              password: decodedData.sub,
+              photo_url: decodedData.picture
             }
             try {
               dispatch({type: LOADING})

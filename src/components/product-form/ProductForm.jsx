@@ -17,8 +17,8 @@ const ProductForm = ({updateProduct, setUpdateProduct, setOpen}) => {
   const onFinish = (values) => {
     const form = new FormData();
     form.append("product_name", values.product_name)
-    form.append("category", values.category[0])
-    form.append("product_type", values.product_type[0])
+    form.append("category", values.category)
+    form.append("product_type", values.product_type)
     form.append("description", values.description)
     form.append("original_price", values.original_price)
     form.append("sale_price", values.sale_price)
@@ -40,8 +40,11 @@ const ProductForm = ({updateProduct, setUpdateProduct, setOpen}) => {
         setUpdateProduct(null)
         setOpen(false)
         notification.success({
-          message: "Success"
+          message: "Successfully"
         })
+        setTimeout(() => {
+          location.reload()
+        }, 500)
       })
       .catch(err => console.log(err))
   }

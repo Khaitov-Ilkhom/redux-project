@@ -6,8 +6,7 @@ import {Typography} from "antd";
 const {Title} = Typography
 
 const Home = () => {
-  const [{payload}] = useFetch("/product/most-popular")
-  console.log(payload)
+  const [{payload}] = useFetch("/product/all")
   return (
     <div>
       <Navbar/>

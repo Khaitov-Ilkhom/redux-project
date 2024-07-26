@@ -16,6 +16,8 @@ const Products = () => {
   });
   const [updateProduct, setUpdateProduct] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
 
   const handleUpdateProduct = (product) => {
     setUpdateProduct(product)
@@ -23,33 +25,39 @@ const Products = () => {
   }
 
 
-  const deleteProduct = () => {
+  const deleteProduct = (product) => {
     setIsModalOpen(true)
-    // fetch( `http://localhost:8000/product/${product._id}`,{
-    //   method: "DELETE",
-    //   headers: {
-    //     "Authorization": "Bearer " + authData.token
-    //   },
-    //   body: {
-    //     product_name: product.product_name,
-    //     _id: product._id
-    //   }
-    // })
-    //   .then(res => res.json())
-    //   .then(data => {
-    //     notification.success({
-    //       message: "Product deleted"
-    //     })
-    //     console.log(data)
-    //   })
-    //   .catch(err => console.log(err))
+    setSelectedProduct(product)
   }
   // Delete modal
   const handleOkey = () => {
+    fetch( `http://localhost:8000/product/${selectedProduct._id}`,{
+      method: "DELETE",
+      headers: {
+        "Authorization": "Bearer " + authData.token
+      },
+      body: {
+        product_name: selectedProduct.product_name,
+        _id: selectedProduct._id
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        notification.success({
+          message: "The product has been successfully deleted"
+        })
+        setTimeout(() => {
+          location.reload()
+        }, 500)
+      })
+      .catch(err => console.log(err))
     setIsModalOpen(false);
   };
   const handleCancell = () => {
     setIsModalOpen(false);
+    notification.warning({
+      message: "The product was not deleted"
+    })
   };
 
   // Modal update and create
@@ -89,13 +97,15 @@ const Products = () => {
     {
       key: "Oprice",
       title: 'Original price',
-      dataIndex: 'original_price',
+      dataIndex: "original_price",
+      render: (original_price) => `$${original_price}`,
       sorter: true,
     },
     {
       key: "Sprice",
       title: 'Sale price',
       dataIndex: 'sale_price',
+      render: (sale_price) => `$${sale_price}`,
       sorter: true,
     },
     {
@@ -125,7 +135,7 @@ const Products = () => {
   return (
     <div>
       <div className="flex justify-between">
-        <ContentTitle>Products</ContentTitle>
+        <ContentTitle>Products 📦</ContentTitle>
         <Button onClick={showModal} type="primary">Add new product</Button>
         <Modal
           title={updateProduct ? "Update product" : "Add new product"}
