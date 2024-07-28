@@ -2,11 +2,14 @@ import Navbar from "../../components/navbar/Navbar.jsx";
 import RenderCard from "../../components/render-card/RenderCard.jsx";
 import {useFetch} from "../../hooks/useFetch.jsx";
 import {Typography} from "antd";
+import {useState} from "react";
 
 const {Title} = Typography
 
 const Home = () => {
-  const [{payload}] = useFetch("/product/all")
+  const [trigger, setTrigger] = useState(false)
+
+  const [{payload}] = useFetch("/product/all", trigger)
   return (
     <div>
       <Navbar/>
@@ -16,7 +19,7 @@ const Home = () => {
         <div className="max-w-[1200px] w-full grid grid-cols-4 gap-3 m-auto mt-4">
           {
             payload && payload?.map(product =>
-              <RenderCard key={product._id} product={product}/>
+              <RenderCard key={product._id} product={product} trigger={trigger} setTrigger={setTrigger}/>
             )
           }
         </div>

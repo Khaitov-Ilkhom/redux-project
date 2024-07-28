@@ -3,7 +3,7 @@ import {saveToLocalStorage} from "../../helpers/Index.jsx";
 
 const initialState = {
   token: localStorage.getItem("Token") || null,
-  user: null,
+  user: JSON.parse(localStorage.getItem("user")) || null,
   loading: false,
   error: null,
   isSuccessful: false,
@@ -15,6 +15,7 @@ const reducer = (state = initialState, action) => {
     case LOGIN_USER:
     case REGISTER_USER:
       saveToLocalStorage("Token", action.token)
+      saveToLocalStorage("user", JSON.stringify(action.user))
       return {
         ...state,
         token: action.token,

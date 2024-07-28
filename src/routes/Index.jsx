@@ -14,6 +14,7 @@ const Protected = lazy(() => import("./protected/Protected.jsx"))
 const LikedProducts = lazy(() => import("./dashboard/liked-products/LikedProducts.jsx"))
 const Profile = lazy(() => import("./dashboard/profile/Profile.jsx"))
 const NotFound = lazy(() => import("./not-found/NotFound.jsx"))
+const SinglePage = lazy(() => import("./single-page/SinglePage.jsx"))
 
 const RouteController = () => {
   const authData = useSelector(state => state)
@@ -74,7 +75,8 @@ const RouteController = () => {
       ]
     },
     {
-      path: "single-page/:id"
+      path: "single-page/:id",
+      element: <Suspense><SinglePage/></Suspense>
     },
     {
       path: "notfound",
