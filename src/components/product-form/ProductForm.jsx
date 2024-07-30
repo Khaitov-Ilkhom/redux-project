@@ -13,26 +13,30 @@ const ProductForm = ({updateProduct, setUpdateProduct, setOpen}) => {
   const [categoryData] = useFetch("/product/category")
   const [productTypeData] = useFetch("/product/product-type")
   const [productImages, setProductsImages] = useState(null)
-  // Form
   const onFinish = (values) => {
-    const form = new FormData();
-    form.append("product_name", values.product_name)
-    form.append("category", values.category)
-    form.append("product_type", values.product_type)
-    form.append("description", values.description)
-    form.append("original_price", values.original_price)
-    form.append("sale_price", values.sale_price)
-    form.append("number_in_stock", values.number_in_stock)
+    const formData = (value) => {
+      const form = new FormData();
+      form.append("product_name", value.product_name)
+      form.append("category", value.category)
+      form.append("product_type", value.product_type)
+      form.append("description", value.description)
+      form.append("original_price", value.original_price)
+      form.append("sale_price", value.sale_price)
+      form.append("number_in_stock", value.number_in_stock)
 
-    for (let i = 0; i < productImages.length; i++) {
-      form.append("product_images", productImages[i])
+      for (let i = 0; i < productImages.length; i++) {
+        form.append("product_images", productImages[i]);
+      }
+
+      return form
     }
-    fetch( updateProduct ? `http://localhost:8000/product/update/${updateProduct._id}` :"http://localhost:8000/product/create", {
+
+    fetch(updateProduct ? `http://localhost:8000/product/update/${updateProduct._id}` : "http://localhost:8000/product/create", {
       method: updateProduct ? "PUT" : "POST",
       headers: {
         "Authorization": "Bearer " + authData.token
       },
-      body: form
+      body: formData(values)
     })
       .then(res => res.json())
       .then(data => {
@@ -42,9 +46,9 @@ const ProductForm = ({updateProduct, setUpdateProduct, setOpen}) => {
         notification.success({
           message: "Successfully"
         })
-        setTimeout(() => {
-          location.reload()
-        }, 500)
+        // setTimeout(() => {
+        //   location.reload()
+        // }, 500)
       })
       .catch(err => console.log(err))
   }
@@ -183,6 +187,7 @@ const ProductForm = ({updateProduct, setUpdateProduct, setOpen}) => {
       </Form.Item>
 
       <Form.Item
+        required
         label="Product Images"
         name="product_images"
         rules={[

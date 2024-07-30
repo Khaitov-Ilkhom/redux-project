@@ -21,13 +21,33 @@ const RenderCard = ({product, trigger, setTrigger}) => {
     }
   }
 
+  // <img className="max-w-[270px] h-[200px] object-cover py-2 group-hover:scale-90 transition duration-500"
+  //      src={product.product_images[0]} alt={product.product_name}/>
+  const contentStyle = {
+    margin: 0,
+    height: '160px',
+    color: '#fff',
+    lineHeight: '160px',
+    textAlign: 'center',
+    background: '#364d79',
+  }
   return (
     <div>
       <Card
         hoverable
         className="relative shadow-xl h-[350px] flex justify-center flex-col items-center group hover:scale-105 transition duration-500"
-        cover={<img className="max-w-[270px] h-[200px] object-cover py-2 group-hover:scale-90 transition duration-500"
-                    src={product.product_images[0]} alt={product.product_name}/>}
+        cover={
+          <Carousel arrows infinite={false}>
+            {
+              product.product_images.map(item =>
+                <div key={item}>
+                  <img style={contentStyle} src={item} alt="img"/>
+                </div>
+              )
+            }
+          </Carousel>
+
+        }
         actions={[
           <Button onClick={() => navigate(`/single-page/${product._id}`)} type="link">More Info</Button>
         ]}
@@ -39,7 +59,7 @@ const RenderCard = ({product, trigger, setTrigger}) => {
             <FaRegHeart className="text-red-500" size={30}/>}
         </Button>
         <Meta
-          title={product.product_name}
+          title={<span className="line-clamp-1 max-w-[200px]">{product.product_name}</span>}
           description={<div className="items-center flex gap-4"><span
             className="text-green-500">{`$${product.sale_price}`}</span> <span
             className="line-through text-red-500">{`$${product.original_price}`}</span></div>}

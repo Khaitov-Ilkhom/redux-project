@@ -10,7 +10,7 @@ const initialState = {
   isError: false
 }
 
-const reducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_USER:
     case REGISTER_USER:
@@ -49,4 +49,4 @@ const reducer = (state = initialState, action) => {
   }
 }
 
-export default reducer
+export default authReducer

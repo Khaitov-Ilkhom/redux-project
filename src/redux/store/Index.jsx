@@ -1,6 +1,6 @@
 import {legacy_createStore} from "redux";
-import reducer from "../reducer/reducer.js";
+import authReducer from "../reducer/authReducer.js";
 
-const store = legacy_createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+const store = legacy_createStore(authReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 
 export default store

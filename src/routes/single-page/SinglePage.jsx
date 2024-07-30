@@ -3,24 +3,20 @@ import {useFetch} from "../../hooks/useFetch";
 import {SlBasketLoaded} from "react-icons/sl";
 import {FaHeart, FaRegHeart} from "react-icons/fa";
 import {useState} from "react";
+import Navbar from "../../components/navbar/Navbar.jsx";
 
 const SinglePage = () => {
   const {id} = useParams();
   const [like, setLike] = useState(false)
   const [stock, setStock] = useState(1)
 
-  const [data, loading] = useFetch(`/product/${id}`);
+  const [data, loading] = useFetch(`/product/single-product/${id}`);
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <header className="bg-white shadow">
-        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold text-gray-900">Product Details</h1>
-        </div>
-      </header>
-
+    <div className="min-h-screen">
+      <Navbar/>
       <main>
-        <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 my-[100px]">
           <div className="overflow-hidden bg-white shadow-form rounded-2xl">
             <div className="border-b border-gray-200 bg-white p-6 sm:px-20">
               <div className="mt-8 flex flex-col md:flex-row">
