@@ -1,7 +1,7 @@
 import {BiTrash} from "react-icons/bi";
 import {FiEdit2} from "react-icons/fi";
 import {IoMdCheckmark} from "react-icons/io";
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {Input, Button, notification} from "antd";
 import {SendOutlined} from "@ant-design/icons";
 import axios from "../../../api/Index.jsx";
