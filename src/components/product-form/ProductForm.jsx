@@ -46,9 +46,9 @@ const ProductForm = ({updateProduct, setUpdateProduct, setOpen}) => {
         notification.success({
           message: "Successfully"
         })
-        // setTimeout(() => {
-        //   location.reload()
-        // }, 500)
+        setTimeout(() => {
+          location.reload()
+        }, 500)
       })
       .catch(err => console.log(err))
   }
