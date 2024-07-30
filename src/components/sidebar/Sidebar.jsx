@@ -9,6 +9,7 @@ import {BsBox2Heart, BsFillDoorOpenFill} from "react-icons/bs";
 import {useDispatch} from "react-redux";
 import {FaUser} from "react-icons/fa6";
 import {FaUsers} from "react-icons/fa";
+import {SlBasket} from "react-icons/sl";
 
 const {Text} = Typography
 const {Sider} = Layout;
@@ -96,6 +97,11 @@ const Sidebar = ({collapsed, userProfileData, loading}) => {
               icon: <BsBox2Heart/>,
               label: <NavLink to="/dashboard/liked-products">Liked products</NavLink>
             },
+            {
+              key: '6',
+              icon: <SlBasket/>,
+              label: <NavLink to="/dashboard/carts">Carts</NavLink>
+            }
           ] : [
             {
               key: '1',
@@ -108,9 +114,14 @@ const Sidebar = ({collapsed, userProfileData, loading}) => {
               label: <NavLink to="/dashboard/profile">Profile</NavLink>
             },
             {
-              key: '5',
+              key: '3',
               icon: <BsBox2Heart/>,
-              label: <NavLink end to="/dashboard/liked-products">Liked products</NavLink>
+              label: <NavLink to="/dashboard/liked-products">Liked products</NavLink>
+            },
+            {
+              key: '4',
+              icon: <SlBasket/>,
+              label: <NavLink to="/dashboard/carts">Carts</NavLink>
             }
           ]}
         />

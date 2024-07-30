@@ -9,7 +9,7 @@ const Users = () => {
   const [tableParams, setTableParams] = useState({
     pagination: {
       current: 1,
-      pageSize: 8,
+      pageSize: 5,
     },
   });
 

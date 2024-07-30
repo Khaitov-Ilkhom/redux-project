@@ -16,7 +16,7 @@ const Home = () => {
 
       <div className="my-[100px]">
         <Title className="text-center block pb-2">Products</Title>
-        <div className="max-w-[1200px] w-full grid grid-cols-4 gap-3 m-auto mt-4">
+        <div className="max-w-[1300px] w-full grid grid-cols-4 gap-4 m-auto mt-4">
           {
             payload && payload?.map(product =>
               <RenderCard key={product._id} product={product} trigger={trigger} setTrigger={setTrigger}/>

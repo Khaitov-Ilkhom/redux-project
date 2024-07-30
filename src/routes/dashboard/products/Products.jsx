@@ -1,9 +1,10 @@
 import {ContentTitle} from "../../../utils/Index.jsx";
-import {Button, Modal, notification} from "antd";
+import {Button, Image, Modal, notification} from "antd";
 import {useState} from "react";
 import ProductForm from "../../../components/product-form/ProductForm.jsx";
 import DashboardContent from "../../../components/dashboardContent/DashboardContent.jsx";
 import {useSelector} from "react-redux";
+import {v4 as uuidv4} from "uuid";
 
 
 const Products = () => {
@@ -115,9 +116,21 @@ const Products = () => {
       sorter: true,
     },
     {
-      title: 'Image',
-      dataIndex: 'product_images',
-      render: (images) => <img className="w-[50px] h-[30px] object-contain" src={images[0]} alt="image"/>,
+      key: "Image",
+      title: "Product Images",
+      dataIndex: "product_images",
+      render: (images) => <Image.PreviewGroup preview={{
+        onChange: (current, prev) => console.log(`current index: ${current}, prev index: ${prev}`),
+      }}>
+        <div key={uuidv4()} className='flex gap-4'>
+          {
+            images?.slice(0, 3).map((image) => (
+              <Image key={image} width={50} src={image}/>
+            ))
+          }
+        </div>
+      </Image.PreviewGroup>,
+      with: '30%',
     },
     {
       key: "Action",

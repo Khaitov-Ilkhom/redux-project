@@ -15,6 +15,7 @@ const LikedProducts = lazy(() => import("./dashboard/liked-products/LikedProduct
 const Profile = lazy(() => import("./dashboard/profile/Profile.jsx"))
 const NotFound = lazy(() => import("./not-found/NotFound.jsx"))
 const SinglePage = lazy(() => import("./single-page/SinglePage.jsx"))
+const Carts = lazy(() => import("./dashboard/carts/Carts.jsx"))
 
 const RouteController = () => {
   const authData = useSelector(state => state)
@@ -66,7 +67,10 @@ const RouteController = () => {
               element: <Suspense><LikedProducts/></Suspense>
             },
             {
-              index: true,
+              path: "carts",
+              element: <Suspense><Carts/></Suspense>
+            },
+            {
               path: "profile",
               element: <Suspense><Profile/></Suspense>
             }

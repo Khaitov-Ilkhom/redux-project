@@ -63,7 +63,7 @@ const ProductForm = ({updateProduct, setUpdateProduct, setOpen}) => {
     if (updateProduct === null) {
       form.resetFields()
     }
-  }, [updateProduct])
+  }, [form, updateProduct])
 
   return (
     <Form

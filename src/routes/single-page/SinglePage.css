@@ -1,0 +1,25 @@
+
+.image_card img{
+  transition: 0.2s;
+}
+
+.image_card:hover img{
+  transform: scale(0.9);
+}
+
+.image_card{
+  border-radius: 25px;
+  overflow: hidden;
+  cursor: pointer;
+  width: 100px;
+  background: #E5E5E5;
+}
+
+.image_card_active{
+  border-radius: 25px;
+  overflow: hidden;
+  cursor: pointer;
+  width: 100px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.52);
+  transition: .3s;
+}
