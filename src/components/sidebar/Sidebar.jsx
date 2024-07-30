@@ -4,12 +4,15 @@ import {ProductOutlined, HomeOutlined} from '@ant-design/icons';
 import {NavLink, useNavigate} from "react-router-dom";
 import {Avatar, Badge} from 'antd';
 import {SIGN_OUT} from "../../redux/action/Types.jsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {BsBox2Heart, BsFillDoorOpenFill} from "react-icons/bs";
 import {useDispatch} from "react-redux";
 import {FaUser} from "react-icons/fa6";
 import {FaUsers} from "react-icons/fa";
 import {SlBasket} from "react-icons/sl";
+import { IoNotifications } from "react-icons/io5";
+import axios from "../../api/Index.jsx";
+
 
 const {Text} = Typography
 const {Sider} = Layout;
@@ -18,7 +21,21 @@ const Sidebar = ({collapsed, userProfileData, loading}) => {
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalText, setModalText] = useState("You will be signed out");
+  const [notification, setNotification] = useState(null)
   const role = userProfileData?.role
+
+  const notificationCount = async () => {
+    try {
+      const res = await axios("/notifications/all")
+      setNotification(res?.data?.payload?.length)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    notificationCount()
+  }, [notificationCount])
 
   const handleOk = () => {
     setModalText("Signed out successfully");
@@ -49,7 +66,7 @@ const Sidebar = ({collapsed, userProfileData, loading}) => {
   return (
     <Sider trigger={null} collapsible collapsed={collapsed} className="py-7 px-2">
       <div className="flex items-center gap-5 p-3 overflow-hidden whitespace-nowrap">
-        <Badge count={1}>
+        <Badge count={notification}>
           {
             loading ? <Skeleton.Avatar active size="large" className="rounded-full bg-slate-500"/>
               : <>{userProfileData && userProfileData.photo_url ? <img src={userProfileData.photo_url} alt={userProfileData.username}/> : <Avatar className="bg-amber-500">{userProfileData?.first_name.at(0)}</Avatar>}</>
@@ -101,6 +118,11 @@ const Sidebar = ({collapsed, userProfileData, loading}) => {
               key: '6',
               icon: <SlBasket/>,
               label: <NavLink to="/dashboard/carts">Carts</NavLink>
+            },
+            {
+              key: '7',
+              icon: <IoNotifications/>,
+              label: <NavLink to="/dashboard/notification">Notification</NavLink>
             }
           ] : [
             {

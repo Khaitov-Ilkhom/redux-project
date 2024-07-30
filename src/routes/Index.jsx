@@ -16,6 +16,7 @@ const Profile = lazy(() => import("./dashboard/profile/Profile.jsx"))
 const NotFound = lazy(() => import("./not-found/NotFound.jsx"))
 const SinglePage = lazy(() => import("./single-page/SinglePage.jsx"))
 const Carts = lazy(() => import("./dashboard/carts/Carts.jsx"))
+const Notification = lazy(() => import("./dashboard/notification/Notification.jsx"))
 
 const RouteController = () => {
   const authData = useSelector(state => state)
@@ -73,6 +74,10 @@ const RouteController = () => {
             {
               path: "profile",
               element: <Suspense><Profile/></Suspense>
+            },
+            {
+              path: "notification",
+              element: <Suspense><Notification/></Suspense>
             }
           ]
         }
