@@ -11,9 +11,7 @@ import {FaUser} from "react-icons/fa6";
 import {FaUsers} from "react-icons/fa";
 import {SlBasket} from "react-icons/sl";
 import { IoNotifications } from "react-icons/io5";
-import axios from "../../api/Index.jsx";
 import {useFetch} from "../../hooks/useFetch.jsx";
-
 
 const {Text} = Typography
 const {Sider} = Layout;
@@ -22,7 +20,7 @@ const Sidebar = ({collapsed, userProfileData, loading}) => {
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalText, setModalText] = useState("You will be signed out");
-  const [notification, setNotification] = useState(null)
+  const [notifications, setNotification] = useState(null)
   const role = userProfileData?.role
   const [trigger, setTrigger] = useState(false)
   const [notificationCount] = useFetch("/notifications/all", trigger)
@@ -62,7 +60,7 @@ const Sidebar = ({collapsed, userProfileData, loading}) => {
   return (
     <Sider trigger={null} collapsible collapsed={collapsed} className="py-7 px-2">
       <div className="flex items-center gap-5 p-3 overflow-hidden whitespace-nowrap">
-        <Badge count={notification}>
+        <Badge count={notifications}>
           {
             loading ? <Skeleton.Avatar active size="large" className="rounded-full bg-slate-500"/>
               : <>{userProfileData && userProfileData.photo_url ? <img src={userProfileData.photo_url} alt={userProfileData.username}/> : <Avatar className="bg-amber-500">{userProfileData?.first_name.at(0)}</Avatar>}</>
