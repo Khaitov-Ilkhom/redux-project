@@ -20,15 +20,16 @@ const Sidebar = ({collapsed, userProfileData, loading}) => {
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalText, setModalText] = useState("You will be signed out");
-  const [notifications, setNotification] = useState(null)
+  const [notifications, setNotifications] = useState(null)
   const role = userProfileData?.role
   const [trigger, setTrigger] = useState(false)
   const [notificationCount] = useFetch("/notifications/all", trigger)
 
   useEffect(() => {
     if (notificationCount) {
-      setNotification(notificationCount?.payload?.length)
-    } setTrigger(!trigger)
+      setNotifications(notificationCount?.payload?.length)
+      setTrigger(true)
+    }
   }, [notificationCount, trigger])
 
   const handleOk = () => {
