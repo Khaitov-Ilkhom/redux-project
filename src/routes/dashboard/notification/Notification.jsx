@@ -1,5 +1,5 @@
 import {BiTrash} from "react-icons/bi";
-import {FiEdit2} from "react-icons/fi";
+// import {FiEdit2} from "react-icons/fi";
 import {IoMdCheckmark} from "react-icons/io";
 import {useEffect, useState} from "react";
 import {Input, Button, notification} from "antd";
@@ -152,9 +152,9 @@ const Notification = () => {
                     Mark as read
                   </Button>
                 )}
-                <Button type="primary" icon={<FiEdit2/>}>
-                  Edit Notification
-                </Button>
+                {/*<Button type="primary" icon={<FiEdit2/>}>*/}
+                {/*  Edit Notification*/}
+                {/*</Button>*/}
                 <Button
                   danger
                   type="primary"

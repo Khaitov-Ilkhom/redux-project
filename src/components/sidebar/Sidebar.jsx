@@ -12,6 +12,7 @@ import {FaUsers} from "react-icons/fa";
 import {SlBasket} from "react-icons/sl";
 import { IoNotifications } from "react-icons/io5";
 import axios from "../../api/Index.jsx";
+import {useFetch} from "../../hooks/useFetch.jsx";
 
 
 const {Text} = Typography
@@ -23,19 +24,14 @@ const Sidebar = ({collapsed, userProfileData, loading}) => {
   const [modalText, setModalText] = useState("You will be signed out");
   const [notification, setNotification] = useState(null)
   const role = userProfileData?.role
-
-  const notificationCount = async () => {
-    try {
-      const res = await axios("/notifications/all")
-      setNotification(res?.data?.payload?.length)
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  const [trigger, setTrigger] = useState(false)
+  const [notificationCount] = useFetch("/notifications/all", trigger)
 
   useEffect(() => {
-    notificationCount()
-  }, [notificationCount])
+    if (notificationCount) {
+      setNotification(notificationCount?.payload?.length)
+    } setTrigger(!trigger)
+  }, [notificationCount, trigger])
 
   const handleOk = () => {
     setModalText("Signed out successfully");
