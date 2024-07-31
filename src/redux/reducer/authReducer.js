@@ -8,7 +8,6 @@ const initialState = {
   error: null,
   isSuccessful: false,
   isError: false,
-  cart: JSON.parse(localStorage.getItem("product")) || []
 }
 
 const authReducer = (state = initialState, action) => {
